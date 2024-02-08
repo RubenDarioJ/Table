@@ -8,6 +8,7 @@
 h1 {
     text-align: center;
 }
+
 .td-image {
     display: block;
     margin-left: auto;
@@ -18,5 +19,8 @@ h1 {
 .custom-table {
     margin: auto;
     width: 100%;
-    
+}
+
+.new {
+    border: 1px solid silver;
 }
