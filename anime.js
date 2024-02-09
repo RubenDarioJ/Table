@@ -43,3 +43,5 @@ renderImage();
 console.log('hola');
 
 console.log('otra prueba');
+
+console.log('cuenta princial')
