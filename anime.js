@@ -40,4 +40,6 @@ async function renderImage() {
 
 renderImage();
 
-console.log('hola')
+console.log('hola');
+
+console.log('otra prueba');
