@@ -1,8 +1,11 @@
+body {
+    margin: 0;
+}
+
 .container {
     margin: auto;
-    width: 50%;
-    border: 3px solid green;
-    padding: 10px
+    width: 100%;
+    max-width: 1080px;
 }
 
 h1 {
@@ -10,10 +13,19 @@ h1 {
 }
 
 .td-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.td-image img {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
     object-fit: cover;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 15px;
+    margin: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .custom-table {
