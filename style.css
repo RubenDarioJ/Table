@@ -44,3 +44,20 @@ td {
 .new {
     border: 1px solid silver;
 }
+
+.button-filter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+
+.button-display {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
