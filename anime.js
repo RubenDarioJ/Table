@@ -6,6 +6,7 @@ async function getAnimeData() {
         .then(response => response.json())
         .then(response => {
             data = response.items;
+            console.log(data);
         })
         .catch(error => console.error(error));
 
@@ -24,6 +25,13 @@ async function renderImage() {
         let tdEelement = document.createElement("td");
         tdEelement.innerHTML = user.id;
         tdEelement.style.textAlign = "center";
+        trElement.appendChild(tdEelement);
+
+        //rating de la imagen
+
+        tdEelement = document.createElement("td");
+        tdEelement.classList.add("td-text");
+        tdEelement.innerHTML = user.rating;
         trElement.appendChild(tdEelement);
 
         //mostrar imagen

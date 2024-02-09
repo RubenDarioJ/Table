@@ -12,6 +12,14 @@ h1 {
     text-align: center;
 }
 
+td {
+    text-align: center;
+}
+
+.td-text {
+    text-transform: capitalize;
+}
+
 .td-image {
     display: flex;
     justify-content: center;
