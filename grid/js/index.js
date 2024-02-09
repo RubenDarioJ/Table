@@ -24,6 +24,9 @@ const renderizeImage = async () => {
         const animeImage = document.createElement("img");
         animeImage.src = user.image_url;
         animeImage.alt = user.title;
+        animeImage.addEventListener("click", () => {
+            console.log(user.rating);
+        })
 
         itemElement.appendChild(animeImage);
         containerElement.appendChild(itemElement);
