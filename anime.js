@@ -39,3 +39,5 @@ async function renderImage() {
 }
 
 renderImage();
+
+console.log('hola')
