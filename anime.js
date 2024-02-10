@@ -57,11 +57,18 @@ async function renderImage(animeData) {
 
         // mostrar imagen
         const imgElement = document.createElement("img");
-        let tdElementImg = document.createElement("td");
+        const tdElementImg = document.createElement("td");
         tdElementImg.classList.add("td-image");
         imgElement.src = user.image_url;
         tdElementImg.appendChild(imgElement);
         trElement.appendChild(tdElementImg);
+
+        const deleteButtonElement = document.createElement("button");
+        const buttonTdElement = document.createElement("td");
+        buttonTdElement.appendChild(deleteButtonElement);
+        deleteButtonElement.innerHTML = "Eliminar";
+        deleteButtonElement.classList.add("button-delete");
+        trElement.appendChild(buttonTdElement);
 
         tBodyElement.appendChild(trElement);
     })
