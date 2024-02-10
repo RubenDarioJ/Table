@@ -13,24 +13,41 @@ async function getAnimeData() {
     return data;
 }
 
-async function renderImage() {
-    const animeData = await getAnimeData();
+let animeData = [];
+async function initialize() {
+    animeData = await getAnimeData();
+    renderImage(animeData);
+}
 
-    const tableElement = document.querySelector(".custom-table");
+function filterByRatingAnimeData(rating) {
+    const filterData = animeData.filter((user) => {
+        return user.rating === rating;
+    });
+
+    renderImage(filterData);
+}
+
+function clearFilter() {
+    renderImage(animeData);
+}
+
+async function renderImage(animeData) {
+    const tBodyElement = document.querySelector(".custom-table tbody");
+    tBodyElement.innerHTML = "";
 
     animeData.forEach((user) => {
         const trElement = document.createElement("tr");
 
-        //mostrar ID
-        let pElementId = document.createElement("p");
-        let tdElement = document.createElement("td");
+        // mostrar ID
+        const pElementId = document.createElement("p");
+        const tdElement = document.createElement("td");
         tdElement.classList.add("td-id");
         pElementId.innerHTML = user.id;
         tdElement.appendChild(pElementId);
         tdElement.style.textAlign = "center";
         trElement.appendChild(tdElement);
 
-        //rating de la imagen
+        // rating de la imagen
         const pElementRating = document.createElement("p");
         const tdElementText = document.createElement("td");
         tdElementText.classList.add("td-text");
@@ -38,7 +55,7 @@ async function renderImage() {
         tdElementText.appendChild(pElementRating);
         trElement.appendChild(tdElementText);
 
-        //mostrar imagen
+        // mostrar imagen
         const imgElement = document.createElement("img");
         let tdElementImg = document.createElement("td");
         tdElementImg.classList.add("td-image");
@@ -46,37 +63,11 @@ async function renderImage() {
         tdElementImg.appendChild(imgElement);
         trElement.appendChild(tdElementImg);
 
-        //esconder imagen click function
-        const nsfwButton = document.querySelector(".button-filter, .td-text");
-        nsfwButton.addEventListener("click", () => {
-            if(user.rating != 'safe') {
-            pElementId.style.display = "none";
-            tdElement.style.visibility ="hidden";
-            pElementRating.style.display = "none";
-            tdElementText.style.visibility ="hidden";
-            imgElement.style.display = "none";
-            tdElementImg.style.display ="none";
-        };
-});
-
-        //mostrar imagen click function
-        const nsfwDisplay = document.querySelector(".button-display");
-        nsfwDisplay.addEventListener("click", () => {
-            if(imgElement.style.display = "none") {
-            pElementId.style.display = "block";
-            tdElement.style.visibility ="visible";
-            pElementRating.style.display = "block";
-            tdElementText.style.visibility ="visible";
-            tdElementImg.style.display ="flex";
-            imgElement.style.display = "block";
-                };
-        });
-
-        tableElement.querySelector("tbody").appendChild(trElement);
+        tBodyElement.appendChild(trElement);
     })
 }
 
-renderImage();
+initialize();
 
 
 // async function filterNSFW() {

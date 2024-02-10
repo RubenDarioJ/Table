@@ -13,8 +13,9 @@
       <section class="container">
         <h1>Lista con imagenes</h1>
         <div>
-        <button onclick="nsfwButton()" class="button-filter">Filter Out NSFW Content</button>
-        <button onclick="nsfwDisplay()" class="button-display">Display NSFW</button>
+        <button onclick="filterByRatingAnimeData('safe')" class="button-filter">Filter Out NSFW Content</button>
+        <button onclick="filterByRatingAnimeData('borderline')" class="button-filter">Filter Out NSFW Content</button>
+        <button onclick="clearFilter()" class="button-display">Display NSFW</button>
       </div>
         <table class="custom-table" border="1">
           <thead>
