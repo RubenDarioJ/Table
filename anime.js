@@ -31,6 +31,12 @@ function clearFilter() {
     renderImage(animeData);
 }
 
+//Borrar elemento seleccionado
+function deleteSelectedElement(index) {
+    animeData.splice(index, 1);
+    renderImage(animeData);
+}
+
 async function renderImage(animeData) {
     const tBodyElement = document.querySelector(".custom-table tbody");
     tBodyElement.innerHTML = "";
@@ -63,12 +69,15 @@ async function renderImage(animeData) {
         tdElementImg.appendChild(imgElement);
         trElement.appendChild(tdElementImg);
 
+        //Borrar lo seleccionado
         const deleteButtonElement = document.createElement("button");
         const buttonTdElement = document.createElement("td");
         buttonTdElement.appendChild(deleteButtonElement);
         deleteButtonElement.innerHTML = "Eliminar";
         deleteButtonElement.classList.add("button-delete");
         trElement.appendChild(buttonTdElement);
+
+        deleteButtonElement.addEventListener("click", () => deleteSelectedElement(animeData.indexOf(user)));
 
         tBodyElement.appendChild(trElement);
     })
@@ -88,4 +97,20 @@ initialize();
 //         }
 //     })
 //     return filter;
+// }
+
+// function deleteButtonGlobal(deleteButtonElement, buttonTdElement) {
+//    const deleteSelect = animeData.filter((user) => {
+//     return user.image_url;
+//    });
+
+//    renderImage(deleteSelect);
+// }
+
+// function pruebaDelete() {
+//     const filterButton = animeData.filter((user) => {
+//         return user.rating === 'safe';
+//     });
+//     console.log('This function is working')
+//     renderImage(filterButton)
 // }
