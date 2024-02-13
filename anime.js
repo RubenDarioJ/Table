@@ -13,28 +13,38 @@ async function getAnimeData() {
     return data;
 }
 
+//raiz
+
 let animeData = [];
+let filteredAnimeData = [];
+
 async function initialize() {
     animeData = await getAnimeData();
-    renderImage(animeData);
+    filteredAnimeData = animeData;
+    renderImage(filteredAnimeData);
 }
 
 function filterByRatingAnimeData(rating) {
-    const filterData = animeData.filter((user) => {
+     filteredAnimeData = animeData.filter((user) => {
         return user.rating === rating;
     });
 
-    renderImage(filterData);
+    renderImage(filteredAnimeData);
 }
 
 function clearFilter() {
-    renderImage(animeData);
+    filteredAnimeData = animeData
+    renderImage(filteredAnimeData);
 }
 
 //Borrar elemento seleccionado
 function deleteSelectedElement(index) {
+    filteredAnimeData.splice(index, 1);
     animeData.splice(index, 1);
-    renderImage(animeData);
+    renderImage(filteredAnimeData);
+      // animeData = animeData.filter((user) => {
+    //     return user.id !== FilteredAnimeData[index].id
+    // })
 }
 
 async function renderImage(animeData) {
