@@ -12,23 +12,49 @@
     <main>
       <section class="container">
         <h1>Lista con imagenes</h1>
-        <div>
-        <button onclick="filterByRatingAnimeData('safe')" class="button-filter">Filter Out NSFW Content</button>
-        <!-- <button onclick="filterByRatingAnimeData('borderline')" class="button-filter">Filter Out NSFW Content</button> -->
-        <button onclick="clearFilter()" class="button-display">Display NSFW</button>
-      </div>
-        <table class="custom-table" border="1">
+        <div class="options">
+          <button onclick="filterByRatingAnimeData('safe')" class="button-filter">Filter Out NSFW Content</button>
+          <!-- <button onclick="filterByRatingAnimeData('borderline')" class="button-filter">Filter Out NSFW Content</button> -->
+          <button onclick="clearFilter()" class="button-display">Display NSFW</button>
+        </div>
+        <div class="loading">
+          Cargando...
+        </div>
+        <section style="margin-bottom: 30px;">
+          <form id="search-filter">
+            <input type="text" id="search" placeholder="Search by tags">
+            <button type="submit">Buscar</button>
+          </form>
+        </section>
+        <table class="custom-table" border="0" cellspacing="0">
           <thead>
             <tr>
               <th>ID</th>
-              <th>Rating</th>
               <th>Random image</th>
+              <th>Rating</th>
+              <th>Tags</th>
               <th>Eliminar Contenido</th>
             </tr>
           </thead>
-          <tbody>
-          </tbody>
+          <tbody></tbody>
         </table>
+
+        <div class="modal" onclick="hideModal()">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 id="user-id" style="margin: 0;">Imagen</h2>
+              <button class="delete-action">
+                Delete image
+              </button>
+              <button class="close-modal-btn" style="cursor: pointer;" onclick="hideModal()">
+                <span class="close-button">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <img src="" alt="" class="modal-image">
+            </div>
+          </div>
+        </div>
       </section>
     </main>
 

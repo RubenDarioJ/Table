@@ -2,13 +2,20 @@ async function getAnimeData() {
     const url = "https://api.nekosapi.com/v3/images";
     let data = [];
 
+    loadingElement.classList.add("show");
+
     await fetch(url)
         .then(response => response.json())
         .then(response => {
             data = response.items;
-            console.log(data);
         })
-        .catch(error => console.error(error));
+        .catch(error => {
+            console.log("Error:------------");
+            console.log(error);
+        })
+        .finally(() => {
+            loadingElement.classList.remove("show");
+        });
 
     return data;
 }
@@ -18,33 +25,82 @@ async function getAnimeData() {
 let animeData = [];
 let filteredAnimeData = [];
 
+const loadingElement = document.querySelector(".loading");
+
 async function initialize() {
     animeData = await getAnimeData();
     filteredAnimeData = animeData;
     renderImage(filteredAnimeData);
 }
+function filterByUserTags(tag) {
+    filteredAnimeData = animeData.filter((user) => {
+        return user.tags.some((item) => item.name.toLowerCase() === tag.toLowerCase());
+    });
+
+    renderImage(filteredAnimeData);
+}
 
 function filterByRatingAnimeData(rating) {
-     filteredAnimeData = animeData.filter((user) => {
+    filteredAnimeData = animeData.filter((user) => {
         return user.rating === rating;
     });
 
     renderImage(filteredAnimeData);
 }
 
+function initForm() {
+    const form = document.querySelector("#search-filter");
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const query = event.target.search.value;
+        filterByUserTags(query);
+    });
+}
+initForm();
+
 function clearFilter() {
     filteredAnimeData = animeData
     renderImage(filteredAnimeData);
 }
 
+function showModal() {
+    const modalElement = document.querySelector(".modal");
+    modalElement.classList.add("show");
+}
+
+function hideModal() {
+    const modalElement = document.querySelector(".modal");
+    modalElement.classList.remove("show");
+}
+
+function toggleModal() {
+    const modalElement = document.querySelector(".modal");
+    modalElement.classList.toggle("show");
+}
+
 //Borrar elemento seleccionado
-function deleteSelectedElement(index) {
-    filteredAnimeData.splice(index, 1);
-    animeData.splice(index, 1);
+function deleteSelectedElement(userId) {
+    const filteredAnimeDataIndex = filteredAnimeData.findIndex((user) => user.id === userId);
+    filteredAnimeData.splice(filteredAnimeDataIndex, 1);
+
+    const animeDataIndex = animeData.findIndex((user) => user.id === userId);
+    animeData.splice(animeDataIndex, 1);
+
+    hideModal();
+
     renderImage(filteredAnimeData);
-      // animeData = animeData.filter((user) => {
-    //     return user.id !== FilteredAnimeData[index].id
-    // })
+}
+
+function showImage(user) {
+    const modalHeaderUserIdElement = document.querySelector(".modal-header #user-id");
+    modalHeaderUserIdElement.innerHTML = user.id;
+
+    const deleteActionButtonElement = document.querySelector(".modal-header .delete-action");
+    deleteActionButtonElement.addEventListener("click", () => deleteSelectedElement(user.id));
+
+    const modalImageElement = document.querySelector(".modal-image");
+    modalImageElement.src = user.image_url;
+    showModal();
 }
 
 async function renderImage(animeData) {
@@ -63,6 +119,15 @@ async function renderImage(animeData) {
         tdElement.style.textAlign = "center";
         trElement.appendChild(tdElement);
 
+        // mostrar imagen
+        const imgElement = document.createElement("img");
+        const tdElementImg = document.createElement("td");
+        tdElementImg.classList.add("td-image");
+        imgElement.src = user.image_url;
+        tdElementImg.appendChild(imgElement);
+        trElement.appendChild(tdElementImg);
+        imgElement.addEventListener("click", () => showImage(user));
+
         // rating de la imagen
         const pElementRating = document.createElement("p");
         const tdElementText = document.createElement("td");
@@ -71,13 +136,17 @@ async function renderImage(animeData) {
         tdElementText.appendChild(pElementRating);
         trElement.appendChild(tdElementText);
 
-        // mostrar imagen
-        const imgElement = document.createElement("img");
-        const tdElementImg = document.createElement("td");
-        tdElementImg.classList.add("td-image");
-        imgElement.src = user.image_url;
-        tdElementImg.appendChild(imgElement);
-        trElement.appendChild(tdElementImg);
+        // td -> Tags de la imagen
+        const tdElementTags = document.createElement("td");
+
+        user.tags.forEach((tag) => {
+            const spanTagElement = document.createElement("span");
+            spanTagElement.classList.add("tag");
+            spanTagElement.innerHTML = tag.name;
+            tdElementTags.appendChild(spanTagElement);
+        });
+
+        trElement.appendChild(tdElementTags);
 
         //Borrar lo seleccionado
         const deleteButtonElement = document.createElement("button");
@@ -87,7 +156,7 @@ async function renderImage(animeData) {
         deleteButtonElement.classList.add("button-delete");
         trElement.appendChild(buttonTdElement);
 
-        deleteButtonElement.addEventListener("click", () => deleteSelectedElement(animeData.indexOf(user)));
+        deleteButtonElement.addEventListener("click", () => deleteSelectedElement(user.id));
 
         tBodyElement.appendChild(trElement);
     })
