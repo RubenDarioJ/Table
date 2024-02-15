@@ -35,7 +35,7 @@ async function initialize() {
 }
 function filterByUserTags(tag) {
     filteredAnimeData = animeData.filter((user) => {
-        return user.tags.some((item) => item.name.toLowerCase() === tag.toLowerCase());
+        return user.tags.some((item) => item.name.toLowerCase().includes(tag.toLowerCase()));
     });
 
     renderImage(filteredAnimeData);
