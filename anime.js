@@ -8,6 +8,7 @@ async function getAnimeData() {
         .then(response => response.json())
         .then(response => {
             data = response.items;
+            console.log(data)
         })
         .catch(error => {
             console.log("Error:------------");
@@ -100,7 +101,13 @@ function showImage(user) {
 
     const modalImageElement = document.querySelector(".modal-image");
     modalImageElement.src = user.image_url;
+
+    user.tags.forEach((tag) => {
+        const textDescription = document.querySelector(".description");
+        textDescription.innerHTML = tag.description;
+    })
     showModal();
+
 }
 
 async function renderImage(animeData) {
