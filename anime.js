@@ -21,6 +21,36 @@ async function getAnimeData() {
     return data;
 }
 
+async function getAnimeTags() {
+    const url = "https://api.nekosapi.com/v3/images/tags";
+    let data = [];
+
+    await fetch(url)
+        .then(response => response.json())
+        .then(response => {
+            data = response.items;
+        });
+
+    return data;
+}
+
+async function addAnimeTags() {
+    const data = await getAnimeTags()
+    const selectElement = document.querySelector("#search-by-tag");
+    data.forEach((tag) => {
+        const optionElement = document.createElement("option");
+        optionElement.value = tag.name;
+        optionElement.innerHTML = tag.name;
+        selectElement.appendChild(optionElement);
+    });
+
+    selectElement.addEventListener("change", (event) => {
+        const value = event.target.value;
+        filterByUserTags(value);
+    });
+}
+addAnimeTags();
+
 //raiz
 
 let animeData = [];
@@ -33,6 +63,7 @@ async function initialize() {
     filteredAnimeData = animeData;
     renderImage(filteredAnimeData);
 }
+
 function filterByUserTags(tag) {
     filteredAnimeData = animeData.filter((user) => {
         return user.tags.some((item) => item.name.toLowerCase().includes(tag.toLowerCase()));
@@ -49,15 +80,15 @@ function filterByRatingAnimeData(rating) {
     renderImage(filteredAnimeData);
 }
 
-function initForm() {
-    const form = document.querySelector("#search-filter");
-    form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const query = event.target.search.value;
-        filterByUserTags(query);
-    });
-}
-initForm();
+// function initForm() {
+//     const form = document.querySelector("#search-filter");
+//     form.addEventListener("submit", (event) => {
+//         event.preventDefault();
+//         const query = event.target['search-by-tag'].value;
+//         filterByUserTags(query);
+//     });
+// }
+// initForm();
 
 function clearFilter() {
     filteredAnimeData = animeData
@@ -104,7 +135,9 @@ function showImage(user) {
 
     user.tags.forEach((tag) => {
         const textDescription = document.querySelector(".description");
-        textDescription.innerHTML = tag.description;
+        const pElement = document.createElement("p");
+        pElement.innerHTML = tag.description;
+        textDescription.appendChild(pElement);
     })
     showModal();
 
