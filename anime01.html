@@ -21,10 +21,9 @@
           Cargando...
         </div>
         <section style="margin-bottom: 30px;">
-          <form id="search-filter">
-            <input type="text" id="search" placeholder="Search by tags">
-            <button type="submit">Buscar</button>
-          </form>
+          <select name="search-by-tag" id="search-by-tag">
+            <option value="">Todos</option>
+          </select>
         </section>
         <table class="custom-table" border="0" cellspacing="0">
           <thead>
@@ -50,7 +49,7 @@
                 <span class="close-button">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body text-center">
               <img src="" alt="" class="modal-image">
             </div>
             <div>
