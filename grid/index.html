@@ -9,10 +9,43 @@
     </head>
     <body>
         <main>
+            <div class="ring loading">
+                Loading...
+                <span class="loading-span"></span>
+            </div>
+            <div class="button-container">
+                <button onclick="filterNSFW('safe')"; class="filter-nsfw" style="--clr:#39FF14"><span>Filter NSFW</span><i></i></button>
+                <button onclick="filterNSFW('safe')" class="filter-nsfw" style="--clr:#900D09"><span>Undo Action</span><i></i></button>
+            </div>
+            <section>
+                <select name="search-by-tag" id="search-by-tag">
+                    <option value="" style="text-transform: uppercase;">Todos</option>
+                </select>
+            </section>
             <section class="container">
                 <div class="grid-container"></div>
             </section>
         </main>
+
+        <div class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="image-id"></h2>
+                    <button class="action-delete">
+                        Delete Image!
+                    </button>
+                    <button class="close-modal-btn" style="cursor: pointer;"  onclick="hideModal()">
+                        <span class="close-button">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img src="" alt="" class="modal-image">
+                </div>
+                <div class="description">
+                </div>
+            </div>
+        </div>
+
         <script src="js/index.js"></script>
     </body>
 </html>
