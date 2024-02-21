@@ -60,9 +60,8 @@ function deleteElements(userId, itemElement) {
 
 function filterNSFW(rating) {
     // const buttonFilter = document.querySelector(".filter-nsfw");
-    filteredAnimeData = animeData.filter((user) => {
-       return user.rating === rating
-    })
+    filteredAnimeData = animeData.filter((user) => user.rating === rating)
+
     console.log(filteredAnimeData)
     renderizeImage(filteredAnimeData);
 }
@@ -120,7 +119,8 @@ async function animeTags() {
     data.forEach((tag) => {
         const optionElement = document.createElement("option");
         optionElement.value = tag.name;
-        optionElement.innerHTML = tag.name;
+        // tag.name debe ser en mayusculas
+        optionElement.innerHTML = tag.name.toUpperCase();
         // optionElement.style.textTransform = "capitalize";
         tagElement.appendChild(optionElement);
     })
@@ -138,6 +138,7 @@ function filterByUserTags(tag) {
     filteredAnimeData = animeData.filter((user) => {
         return user.tags.some((item) => item.name.toLowerCase().includes(tag.toLowerCase()));
     });
+
     console.log(filteredAnimeData)
     renderizeImage(filteredAnimeData);
 }
@@ -146,6 +147,7 @@ const renderizeImage = async (animeData) => {
     // const animeData = await getAnimeData();
 
     const containerElement = document.querySelector(".grid-container");
+    containerElement.innerHTML = "";
 
     animeData.forEach((user) => {
         const itemElement = document.createElement("div");
